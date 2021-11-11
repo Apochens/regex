@@ -7,6 +7,15 @@ datatype regex = Epsilon
                 | Concat of regex * regex 
                 | Star of regex 
 
+fun min(x: int, y: int) = if x < y then x else y
+
+fun minlen(Epsilon) = 0
+  | minlen(Symbol a) = 1
+  | minlen(Or(r1, r2)) = min(minlen(r1), minlen(r2))
+  | minlen(Concat(r1, r2)) = minlen(r1) + minlen(r2)
+  | minlen(Star(r)) = 0
+  | minlen(_) = 0
+
 fun eq(Epsilon, Epsilon) = true
   | eq(Phi, Phi) = true
   | eq(Symbol a, Symbol b) = a = b
